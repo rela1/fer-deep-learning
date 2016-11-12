@@ -109,9 +109,10 @@ grad_x = loss.backward_inputs(x, y)
 print("Relative error = ", rel_error(grad_x_num, grad_x))
 print("Error norm = ", np.linalg.norm(grad_x_num - grad_x))
 
-
+"""
 print("\nBN")
 x = np.random.randn(100, 4, 5, 5)
 grad_out = np.random.randn(100, 4, 5, 5)
 pool = layers.BatchNormalization(x, "bn")
 grad_check(pool, x, grad_out)
+"""

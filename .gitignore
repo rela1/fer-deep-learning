@@ -1,0 +1,6 @@
+lab2/results
+*.pyc
+*.so
+*.o
+lab2/build
+lab2/__pycache__
