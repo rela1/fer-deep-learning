@@ -13,10 +13,10 @@ SAVE_DIR = sys.argv[2]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. se
 
 config = {}
 config['max_epochs'] = 35
-config['batch_size'] = 250
+config['batch_size'] = 500
 config['save_dir'] = SAVE_DIR
-config['weight_decay'] = 1e-5
-config['learning_rate'] = {1 : 1e-3, 3 : 1e-4, 5 : 1e-5, 7: 1e-6}
+config['weight_decay'] = 1e-7
+config['learning_rate'] = {1 : 1e-2, 3 : 1e-3, 5 : 1e-4, 7: 1e-5}
 
 config['conv1_output'] = 16
 config['conv1_kernel'] = 5
@@ -50,6 +50,7 @@ def one_hot(array, num_classes):
     return one_hot_arr
 
 if __name__ == '__main__':
+    np.random.seed(int(time.time() * 1e6) % 2**31)
     train_x = np.ndarray((0, img_height * img_width * num_channels), dtype=np.float32)
     train_y = []
     for i in range(1, 6):
