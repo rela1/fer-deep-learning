@@ -6,9 +6,10 @@ import time
 import tf_model
 import pickle
 import os
+import sys
 
-DATA_DIR = '/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/data/cifar-10-batches-py/'
-SAVE_DIR = '/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/results/MNIST_tf_reg_1e-3_cifar/'
+DATA_DIR = sys.argv[1]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/data/cifar-10-batches-py/'
+SAVE_DIR = sys.argv[2]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/results/MNIST_tf_reg_1e-3_cifar/'
 
 config = {}
 config['max_epochs'] = 1
