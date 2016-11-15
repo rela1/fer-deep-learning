@@ -1,5 +1,7 @@
 from sklearn.metrics import confusion_matrix
 from operator import itemgetter
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import time
 import os
