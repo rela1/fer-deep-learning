@@ -139,8 +139,8 @@ def train_tf(train_x, train_y, valid_x, valid_y, session, inputs, labels, logits
   num_examples = train_x.shape[0]
   assert num_examples % batch_size == 0
   num_batches = num_examples // batch_size
-  learning_rate = tf.Variable(name='learning_rate')
   learning_rate_map = config['learning_rate']
+  learning_rate = tf.Variable(learning_rate_map[1], name='learning_rate')
   optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
   train_op = optimizer.minimize(loss)
   session.run(tf.initialize_all_variables())
