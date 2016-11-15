@@ -12,7 +12,7 @@ config = {}
 config['max_epochs'] = 8
 config['batch_size'] = 50
 config['save_dir'] = SAVE_DIR
-config['weight_decay'] = 1e-3
+config['weight_decay'] = 1e-1
 config['learning_rate'] = 1e-4
 
 config['conv1_output'] = 16
@@ -27,7 +27,7 @@ config['conv2_stride'] = 1
 config['pool2_kernel'] = 2
 config['pool2_stride'] = 2
 
-config['fc1_output'] = 512
+config['fc_outputs'] = [512]
 config['num_classes'] = 10
 
 if __name__ == '__main__':
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     session = tf.Session()
     inputs = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], train_x.shape[1], train_x.shape[2], train_x.shape[3]))
     labels = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], config['num_classes']))
-    logits, loss, weights_collection = tf_model.build_model(inputs, labels, config['num_classes'], config)
+    logits, per_example_loss, loss, weights_collection = tf_model.build_model(inputs, labels, config['num_classes'], config)
 
     nn.train_tf(train_x, train_y, valid_x, valid_y, session, inputs, labels, logits, loss, weights_collection, config)
     nn.evaluate_tf("Test", test_x, inputs, test_y, labels, session, logits, loss, config)
