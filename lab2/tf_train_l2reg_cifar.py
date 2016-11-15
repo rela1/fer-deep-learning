@@ -8,15 +8,15 @@ import pickle
 import os
 import sys
 
-DATA_DIR = sys.argv[1]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/data/cifar-10-batches-py/'
-SAVE_DIR = sys.argv[2]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/results/MNIST_tf_reg_1e-3_cifar/'
+DATA_DIR = '/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/data/cifar-10-batches-py/'
+SAVE_DIR = '/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/results/MNIST_tf_reg_1e-3_cifar/'
 
 config = {}
-config['max_epochs'] = 35
-config['batch_size'] = 500
+config['max_epochs'] = 10
+config['batch_size'] = 250
 config['save_dir'] = SAVE_DIR
 config['weight_decay'] = 1e-7
-config['learning_rate'] = {1 : 1e-2, 3 : 1e-3, 5 : 1e-4, 7: 1e-5}
+config['learning_rate'] = {1 : 1e-3, 3 : 1e-4, 5 : 1e-5, 7: 1e-6}
 
 config['conv1_output'] = 16
 config['conv1_kernel'] = 5
@@ -59,7 +59,6 @@ if __name__ == '__main__':
         train_y += subset['labels']
     train_x = train_x.reshape((-1, num_channels, img_height, img_width)).transpose(0,2,3,1)
     train_y = np.array(train_y, dtype=np.int32)
-    train_y_oh = one_hot(train_y, num_classes)
 
     subset = unpickle(os.path.join(DATA_DIR, 'test_batch'))
     test_x = subset['data'].reshape((-1, num_channels, img_height, img_width)).transpose(0,2,3,1).astype(np.float32)
@@ -73,6 +72,7 @@ if __name__ == '__main__':
     valid_y_oh = one_hot(valid_y, num_classes)
     train_x = train_x[valid_size:, ...]
     train_y = train_y[valid_size:, ...]
+    train_y_oh = one_hot(train_y, num_classes)
     data_mean = train_x.mean((0,1,2))
     data_std = train_x.std((0,1,2))
 
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     test_x = (test_x - data_mean) / data_std
 
     session = tf.Session()
-    inputs = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], train_x.shape[2], train_x.shape[1], train_x.shape[3]))
+    inputs = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], train_x.shape[1], train_x.shape[2], train_x.shape[3]))
     labels = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], config['num_classes']))
     logits, per_example_loss, loss, weights_collection = tf_model.build_model(inputs, labels, config['num_classes'], config)
 

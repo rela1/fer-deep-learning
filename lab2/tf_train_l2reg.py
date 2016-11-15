@@ -13,8 +13,8 @@ config = {}
 config['max_epochs'] = 8
 config['batch_size'] = 50
 config['save_dir'] = SAVE_DIR
-config['weight_decay'] = 1e-1
-config['learning_rate'] = {1 : 1e-2, 3 : 1e-3, 5 : 1e-4, 7: 1e-5}
+config['weight_decay'] = 1e-4
+config['learning_rate'] = {1 : 1e-3, 3 : 1e-4, 5 : 1e-5, 7: 1e-6}
 
 config['conv1_output'] = 16
 config['conv1_kernel'] = 5
