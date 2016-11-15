@@ -139,7 +139,9 @@ def train_tf(train_x, train_y, valid_x, valid_y, session, inputs, labels, logits
   num_examples = train_x.shape[0]
   assert num_examples % batch_size == 0
   num_batches = num_examples // batch_size
-  optimizer = tf.train.AdamOptimizer(learning_rate=config['learning_rate'])
+  learning_rate = tf.placeholder(tf.float32)
+  learning_rate_map = config['learning_rate']
+  optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
   train_op = optimizer.minimize(loss)
   session.run(tf.initialize_all_variables())
   plot_data = {}
@@ -149,13 +151,15 @@ def train_tf(train_x, train_y, valid_x, valid_y, session, inputs, labels, logits
   plot_data['valid_acc'] = []
   plot_data['lr'] = []
   for epoch in range(1, max_epochs+1):
+    if epoch in learning_rate_map:
+      learning_rate_value = learning_rate_map[epoch]
     cnt_correct = 0
     train_x, train_y = shuffle_data(train_x, train_y)
     for i in range(num_batches):
       batch_x = train_x[i*batch_size:(i+1)*batch_size, :]
       batch_y = train_y[i*batch_size:(i+1)*batch_size, :]
       start_time = time.time()
-      logits_val, loss_val, conv1_weights_val, _ = session.run([logits, loss, weights_collection[0], train_op], feed_dict={inputs:batch_x, labels:batch_y})
+      logits_val, loss_val, conv1_weights_val, _ = session.run([logits, loss, weights_collection[0], train_op], feed_dict={inputs:batch_x, labels:batch_y, learning_rate:learning_rate_value})
       duration = time.time() - start_time
       yp = np.argmax(logits_val, 1)
       yt = np.argmax(batch_y, 1)
