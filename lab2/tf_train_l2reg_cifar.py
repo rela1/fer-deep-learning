@@ -12,11 +12,11 @@ DATA_DIR = sys.argv[1]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. se
 SAVE_DIR = sys.argv[2]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/results/MNIST_tf_reg_1e-3_cifar/'
 
 config = {}
-config['max_epochs'] = 10
+config['max_epochs'] = 35
 config['batch_size'] = 250
 config['save_dir'] = SAVE_DIR
-config['weight_decay'] = 1e-7
-config['learning_rate'] = {1 : 1e-2, 3 : 1e-3, 5 : 1e-4, 7: 1e-5}
+config['weight_decay'] = 1e-5
+config['learning_rate'] = {1 : 1e-3, 3 : 1e-4, 5 : 1e-5, 7: 1e-6}
 
 config['conv1_output'] = 16
 config['conv1_kernel'] = 5
