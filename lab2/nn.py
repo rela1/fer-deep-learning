@@ -159,7 +159,7 @@ def train_tf(train_x, train_y, valid_x, valid_y, session, inputs, labels, logits
       batch_x = train_x[i*batch_size:(i+1)*batch_size, :]
       batch_y = train_y[i*batch_size:(i+1)*batch_size, :]
       start_time = time.time()
-      logits_val, loss_val, conv1_weights_val, _ = session.run([logits, loss, weights_collection[0], train_op], feed_dict={inputs:batch_x, labels:batch_y, learning_rate:learning_rate_value})
+      logits_val, loss_val, conv1_weights_val, _, lr_val = session.run([logits, loss, weights_collection[0], train_op, tf.assign(learning_rate, learning_rate_value)], feed_dict={inputs:batch_x, labels:batch_y})
       duration = time.time() - start_time
       yp = np.argmax(logits_val, 1)
       yt = np.argmax(batch_y, 1)
@@ -178,7 +178,7 @@ def train_tf(train_x, train_y, valid_x, valid_y, session, inputs, labels, logits
     plot_data['valid_loss'] += [valid_loss]
     plot_data['train_acc'] += [train_acc]
     plot_data['valid_acc'] += [valid_acc]
-    plot_data['lr'] += [session.run(optimizer._lr_t)]
+    plot_data['lr'] += [lr_val]
   plot_training_progress(config['save_dir'], plot_data)
   draw_conv_filters_tf(-1, -1, conv1_weights_val, save_dir)
 
@@ -195,7 +195,7 @@ def evaluate_tf(name, x, inputs, y, labels, session, logits, loss, config):
   for i in range(num_batches):
     batch_x = x[i*batch_size:(i+1)*batch_size, :]
     batch_y = y[i*batch_size:(i+1)*batch_size, :]
-    logits_val, loss_val = session.run([logits, loss], feed_dict={inputs:batch_x, labels:batch_y})
+    logits_val, loss_val = session.run([logits, loss], feed_dict={inputs:batch_x, labels:batch_y, learning_rate:0})
     yp = np.argmax(logits_val, 1)
     yt = np.argmax(batch_y, 1)
     conf_matrix_batch = confusion_matrix(yt, yp, labels=np.arange(10))
