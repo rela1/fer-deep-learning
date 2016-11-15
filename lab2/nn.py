@@ -195,7 +195,7 @@ def evaluate_tf(name, x, inputs, y, labels, session, logits, loss, config):
   for i in range(num_batches):
     batch_x = x[i*batch_size:(i+1)*batch_size, :]
     batch_y = y[i*batch_size:(i+1)*batch_size, :]
-    logits_val, loss_val = session.run([logits, loss], feed_dict={inputs:batch_x, labels:batch_y, learning_rate:0})
+    logits_val, loss_val = session.run([logits, loss], feed_dict={inputs:batch_x, labels:batch_y})
     yp = np.argmax(logits_val, 1)
     yt = np.argmax(batch_y, 1)
     conf_matrix_batch = confusion_matrix(yt, yp, labels=np.arange(10))
