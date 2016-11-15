@@ -5,8 +5,8 @@ from tensorflow.examples.tutorials.mnist import input_data
 import time
 import tf_model
 
-DATA_DIR = '/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab1/data/'
-SAVE_DIR = '/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/results/MNIST_tf_reg_1e-3/'
+DATA_DIR = sys.argv[1]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab1/data/'
+SAVE_DIR = sys.argv[2]#'/media/irelic/Storage/My Documents/Ivan/Škola/FER/9. semestar/Duboko učenje/lab/lab2/results/MNIST_tf_reg_1e-3/'
 
 config = {}
 config['max_epochs'] = 8

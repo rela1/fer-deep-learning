@@ -80,7 +80,7 @@ if __name__ == '__main__':
     test_x = (test_x - data_mean) / data_std
 
     session = tf.Session()
-    inputs = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], train_x.shape[1], train_x.shape[2], train_x.shape[3]))
+    inputs = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], train_x.shape[2], train_x.shape[1], train_x.shape[3]))
     labels = tf.placeholder(dtype=tf.float32, shape=(config['batch_size'], config['num_classes']))
     logits, per_example_loss, loss, weights_collection = tf_model.build_model(inputs, labels, config['num_classes'], config)
 
